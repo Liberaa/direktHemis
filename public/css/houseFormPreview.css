@@ -1,0 +1,35 @@
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  
+  .preview-image-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .preview-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e63946;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+  

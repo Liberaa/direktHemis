@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title>Redigera fastighetsannons</title>
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/houseForm.css">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Redigera fastighetsannons</h1>
+      </header>
+      <main>
+        <form action="/house/redigera/<%= house._id %>" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">Rubrik:</label>
+            <input type="text" id="title" name="title" value="<%= house.title %>" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Beskrivning:</label>
+            <textarea id="description" name="description" required><%= house.description %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="price">Pris (kr):</label>
+            <input type="number" id="price" name="price" value="<%= house.price %>" required>
+          </div>
+          <div class="form-group">
+            <label for="area">Area (m²):</label>
+            <input type="number" id="area" name="area" value="<%= house.area %>" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Adress:</label>
+            <input type="text" id="address" name="address" value="<%= house.address %>" required>
+          </div>
+          <div class="form-group">
+            <label for="houseImage">Ny bild (valfritt):</label>
+            <input type="file" id="houseImage" name="houseImage">
+          </div>
+          <button type="submit" >Uppdatera annons</button>
+        </form>
+      </main>
+    </div>
+    <p><a href="/house/lista" id="brap">Tillbaka</a></p>
+  </body>
+</html>

@@ -1,0 +1,268 @@
+:root {
+    --clr-bg:       #f8f9fa;
+    --clr-surface:  #ffffff;
+    --clr-text:     #076bcf;
+    --clr-muted:    #6c757d;
+    --clr-primary:  #0d6efd;
+  
+    --radius-sm:  .5rem;
+    --radius-md:  1rem;
+    --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.1);
+  
+    --space-1: .5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    font-family: system-ui, sans-serif;
+  }
+  
+  .house-detail {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-4) var(--space-2);
+  }
+  
+  /* ─── Detail Nav ─── */
+  .detail-nav {
+    margin-top: var(--space-4);
+  }
+  .detail-nav .btn-back {
+    display: inline-block;
+    margin-left: 30px;
+    background: transparent;
+    color: var(--clr-primary);
+    padding: .5rem 1rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid var(--clr-primary);
+    transition: background .2s ease, color .2s ease;
+  }
+  .detail-nav .btn-back:hover,
+  .detail-nav .btn-back:focus-visible {
+    background: var(--clr-primary);
+    color: #fff;
+  }
+  
+  /* ─── Header ─── */
+  .detail-header {
+    text-align: center;
+    margin-bottom: var(--space-3);
+  }
+  .detail-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: .25rem;
+  }
+  .detail-header .uploader {
+    font-size: .95rem;
+    color: var(--clr-muted);
+  }
+  
+  /* ─── Body Layout ─── */
+  .detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  @media (min-width: 900px) {
+    .detail-body {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+    .left-image,
+    .right-info {
+      flex: 1;
+    }
+    .right-info {
+      padding-left: var(--space-4);
+    }
+  }
+  
+  /* ─── 3D Carousel Frame & Main Image ─── */
+  .carousel {
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    perspective: 1200px;
+    margin: 0 auto var(--space-4);
+    overflow: visible;
+  }
+  @supports not (aspect-ratio: 4/3) {
+    .carousel {
+      height: 0;
+      padding-bottom: 75%;
+    }
+  }
+  /* Main image only */
+  .carousel > img.detail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transform-origin: center;
+    transition: transform 0.8s ease;
+  }
+  .carousel > img.rotate-out {
+    transform: rotateY(90deg);
+  }
+  .carousel > img.rotate-in {
+    transform: rotateY(-90deg);
+  }
+  
+  /* ─── Carousel Controls ─── */
+  .carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    z-index: 10;
+  }
+  .carousel-btn {
+    background: var(--clr-primary);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .carousel-btn:hover,
+  .carousel-btn:focus {
+    background: #0751d2;
+    outline: none;
+  }
+  
+  /* ─── Thumbnails ─── */
+  .carousel-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+  .thumbnail {
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: transform 0.2s ease, border 0.2s ease;
+  }
+  .thumbnail img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 2px solid transparent;
+  }
+  .thumbnail:focus img,
+  .thumbnail:hover img,
+  .thumbnail.active img {
+    border-color: var(--clr-primary);
+    transform: scale(1.05);
+  }
+  
+  /* ─── Meta & Description ─── */
+  .detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--space-2);
+  }
+  .detail-meta li {
+    background: var(--clr-surface);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    font-size: 1rem;
+  }
+  .detail-description {
+    margin-top: var(--space-2);
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+  
+  /* ─── Contact Box ─── */
+  .contact-box {
+    margin-top: var(--space-3);
+    background: var(--clr-surface);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+  .contact-box h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+    font-size: 1.3rem;
+  }
+  .contact-box input,
+  .contact-box textarea {
+    width: 95%;
+    padding: .75rem;
+    margin-bottom: var(--space-2);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+  }
+  .contact-box button {
+    background: var(--clr-primary);
+    color: #fff;
+    padding: .75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .contact-box button:hover {
+    background: #0751d2;
+    transform: translateY(-2px);
+  }
+  
+  /* ─── Lightbox Modal ─── */
+  .image-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  .image-modal.hidden {
+    display: none;
+  }
+  .image-modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    border-radius: var(--radius-md);
+  }
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  
+  

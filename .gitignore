@@ -1,0 +1,16 @@
+# 
+.env
+.env.*
+
+node_modules
+uploads
+
+# 
+package-lock.json
+
+# --- Played around with chat functions, thats not according to my projectplan ---
+public/js/chatSocket.js
+src/controllers/messageController.js
+src/routes/messageRoutes.js
+src/models/MessageModel.js
+src/views/messages*

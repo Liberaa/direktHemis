@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title>Mina fastigheter</title>
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/houseList.css">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Mina fastigheter</h1>
+      </header>
+      <main>
+        <% if (houses.length === 0) { %>
+          <p>Inga fastigheter funna. Skapa en ny annons!</p>
+        <% } else { %>
+          <div class="house-grid">
+            <% houses.forEach(house => { %>
+              <div class="house-card">
+                <h2><%= house.title %></h2>
+                <p><strong>Beskrivning:</strong> <%= house.description %></p>
+                <p><strong>Pris:</strong> <%= house.price %> kr</p>
+                <p><strong>Area:</strong> <%= house.area %> m²</p>
+                <p><strong>Adress:</strong> <%= house.address %></p>
+                <% if (house.images && house.images.length > 0) { %>
+                  <img src="/house/image/<%= house._id %>/0" alt="Fastighet">
+                <% } else { %>
+                  <img src="/default-house.png" alt="Ingen bild">
+                <% } %>                  
+                <div class="card-actions">
+                  <a href="/house/redigera/<%= house._id %>" id="edit">Redigera</a>
+                  <form action="/house/<%= house._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Är du säker på att du vill radera denna fastighet?')">
+                    <button type="submit" class="btn-link" id="remove">Ta bort</button>
+                  </form>
+                </div>
+                <p><a href="/" id="brap">Tillbaka</a></p>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+      </main>
+    </div>
+    <script src="/js/house.js"></script>
+  </body>
+</html>

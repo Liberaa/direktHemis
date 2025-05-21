@@ -1,0 +1,108 @@
+    <!-- RADNOM AI GREJER! TA BORT SEN TODO : -->
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detaljer – Privat Bostadsmarknad</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;color:#222}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    h1{font-size:2rem;margin-bottom:.5rem}
+    p.lead{margin-top:0;margin-bottom:1.2rem;color:#555}
+    section{background:#fff;border-radius:8px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,.06)}
+    h2{font-size:1.25rem;margin:0 0 .5rem}
+    h3{font-size:1rem;margin:1rem 0 .25rem}
+    ul,ol{margin:0;padding-left:1.1rem}
+    li{margin:.25rem 0}
+    .badge{background:#004aa9;color:#fff;font-size:.75rem;padding:2px 6px;border-radius:4px;margin-left:6px}
+    .notice{background:#fffae6;border-left:4px solid #ffd23d;padding:12px;font-size:.9rem;margin-top:12px}
+    .btn{display:inline-block;padding:10px 18px;background:#004aa9;color:#fff;border-radius:4px;text-decoration:none;margin-top:20px}
+    a.download{color:#004aa9;text-decoration:underline}
+    details{margin:8px 0}
+    summary{cursor:pointer;font-weight:600;outline:none}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Alla detaljer</h1>
+    <p class="lead">Här finns dokumenten att ladda ner, stegvisa guider och våra juridiska förklaringar – så tydligt att ett barn förstår.</p>
+
+    <section id="docs">
+      <h2>Dokument</h2>
+      <ul>
+        <li><a href="/docs/kopekontrakt.pdf" class="download" download>Köpekontrakt (PDF)</a></li>
+        <li><a href="/docs/handpenningavtal.pdf" class="download" download>Handpenning­avtal (PDF)</a></li>
+        <li><a href="/docs/overlatelsebesiktning-checklista.pdf" class="download" download>Besiktningschecklista (PDF)</a></li>
+        <li><a href="/docs/energideklaration-guide.pdf" class="download" download>Guide till energi­deklaration (PDF)</a></li>
+        <li><a href="/docs/doldafel-forsakran.pdf" class="download" download>Dolda‑fel‑försäkran (PDF)</a></li>
+      </ul>
+    </section>
+
+    <% const sellerSteps=[
+      {title:'Steg 1: Skapa annons', bullets:['Logga in med Bank‑ID.','Fyll i adress & area.','Ladda upp soliga bilder.']},
+      {title:'Steg 2: Publicera & dela', bullets:['Tryck Publicera.','Dela länken.','Se visningsstatistik.']},
+      {title:'Steg 3: Svara & visa', bullets:['Chatta med köpare.','Boka visningar.','Pling för bud.']},
+      {title:'Steg 4: Kontrakt & handpenning', bullets:['Skapa kontrakt.','Signera med Bank‑ID.','Handpenning till escrow.']},
+      {title:'Steg 5: Flytt & slutbetalning', bullets:['Följ flytt‑checklistan.','Restbetalning på tillträdet.','Lämna nycklarna.']}
+    ]; %>
+    <section>
+      <h2>Säljare <span class="badge">Steg&nbsp;för&nbsp;steg</span></h2>
+      <% sellerSteps.forEach(s=>{ %>
+        <h3><%= s.title %></h3>
+        <ul><% s.bullets.forEach(b=>{ %><li><%= b %></li><% }); %></ul>
+      <% }); %>
+    </section>
+
+    <% const buyerSteps=[
+      {title:'Steg 1: Sök & bevaka', bullets:['Välj område & pris.','Spara sökning.','Pling vid nya objekt.']},
+      {title:'Steg 2: Boka visning', bullets:['Skicka förfrågan.','Få bekräftelse.','Lägg i kalender.']},
+      {title:'Steg 3: Lägga bud', bullets:['Tryck "Lägg bud".','Signera Bank‑ID.','Budhistorik i appen.']},
+      {title:'Steg 4: Kontrakt & handpenning', bullets:['Signera digitalt.','Handpenning via LegitPay.','Kontrakt sparas.']},
+      {title:'Steg 5: Flytta in', bullets:['Adressändra.','Betala resten.','Nycklar & inflytt!']}
+    ]; %>
+    <section>
+      <h2>Köpare <span class="badge">Steg&nbsp;för&nbsp;steg</span></h2>
+      <% buyerSteps.forEach(s=>{ %>
+        <h3><%= s.title %></h3>
+        <ul><% s.bullets.forEach(b=>{ %><li><%= b %></li><% }); %></ul>
+      <% }); %>
+    </section>
+
+    <section id="checkout">
+      <h2>Köp‑knappen & betalning <span class="badge">Tryggt</span></h2>
+      <ol>
+        <li>Signera köpekontraktet i plattformen.</li>
+        <li>Kontraktet skickas till oss – jurist granskar formkrav.</li>
+        <li>När det stämplas "Kontrakt OK" visas <strong>Köp‑knappen</strong>.</li>
+        <li>Köparen betalar via LegitPay (escrow).</li>
+        <li>På tillträdesdagen godkänner båda – pengar frisläpps.</li>
+      </ol>
+      <div class="notice">LegitPay är licensierat institut under Finans­inspektionen. Vi hanterar aldrig dina pengar direkt.</div>
+    </section>
+
+    <section id="legal-seller">
+      <h2>Juridik för säljare</h2>
+      <details><summary>Upplysningsplikt</summary><ul><li>Berätta om alla kända fel.</li><li>Använd Fel‑ & risk‑protokoll.</li><li>Dolt fel kan ge skadestånd.</li></ul></details>
+      <details><summary>Köpekontrakt & köpebrev</summary><ul><li>Köpekontrakt = avtal.</li><li>Köpebrev = kvitto efter betalning.</li><li>Behövs för lagfart.</li></ul></details>
+      <details><summary>Skatt</summary><ul><li>Vinst×22 % på K6.</li><li>Spara kvitton på förbättringar.</li></ul></details>
+      <details><summary>Pantbrev & lagfart</summary><ul><li>Pantbrev följer huset.</li><li>Nya pantbrev 2 % + 375 kr.</li></ul></details>
+      <details><summary>Dolda‑fel‑försäkring</summary><ul><li>Täcker krav i 10 år.</li><li>Kräver besiktning.</li></ul></details>
+    </section>
+
+    <section id="legal-buyer">
+      <h2>Juridik för köpare</h2>
+      <details><summary>Undersökningsplikt</summary><ul><li>Besikta huset.</li><li>Fel du borde sett → inget krav.</li></ul></details>
+      <details><summary>Finansieringsintyg</summary><ul><li>Krävs för bud.</li><li>Giltigt ca 3 mån.</li></ul></details>
+      <details><summary>Villkorade bud</summary><ul><li>Skriv in villkoren.</li><li>Tidsgräns viktig.</li></ul></details>
+      <details><summary>Lagfart & pantbrev</summary><ul><li>Lagfart 1.5 % + 825 kr.</li><li>Pantbrev 2 % nya brev.</li></ul></details>
+      <details><summary>Amorteringskrav</summary><ul><li>Max 85 % belåning.</li><li>Belåning >70 % → amortera 2 %/år.</li></ul></details>
+    </section>
+
+    <div class="notice"><strong>OBS!</strong> Denna sida ger generell information – rådfråga jurist eller bank vid osäkerhet.</div>
+
+    <a href="/" class="btn">Tillbaka</a>
+  </div>
+</body>
+</html>

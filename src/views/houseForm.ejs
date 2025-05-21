@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title>Skapa fastighetsannons</title>
+    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest"></script>
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/houseForm.css">
+    <link rel="stylesheet" href="/css/houseFormPreview.css">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Skapa ny fastighetsannons</h1>
+      </header>
+
+      <main>
+        <form action="/house/ny" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="title">Rubrik:</label>
+            <input type="text" id="title" name="title" required>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Beskrivning:</label>
+            <textarea id="description" name="description" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Pris (kr):</label>
+            <input type="number" id="price" name="price" required>
+          </div>
+
+          <div class="form-group">
+            <label for="area">Boarea (m²):</label>
+            <input type="number" id="area" name="area" required>
+          </div>
+
+          <div class="form-group">
+            <label for="biarea">Biarea (m²):</label>
+            <input type="number" id="biarea" name="biarea">
+          </div>
+
+          <div class="form-group">
+            <label for="lotSize">Tomtarea (m²):</label>
+            <input type="number" id="lotSize" name="lotSize">
+          </div>
+
+          <div class="form-group">
+            <label for="rooms">Antal rum:</label>
+            <input type="number" id="rooms" name="rooms">
+          </div>
+
+          <div class="form-group">
+            <label for="houseType">Bostadstyp:</label>
+            <select id="houseType" name="houseType">
+              <option value="">Välj typ</option>
+              <option value="villa">Villa</option>
+              <option value="lägenhet">Lägenhet</option>
+              <option value="radhus">Radhus</option>
+              <option value="fritidshus">Fritidshus</option>
+              <option value="övrigt">Övrigt</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="ownership">Upplåtelseform:</label>
+            <select id="ownership" name="ownership">
+              <option value="">Välj</option>
+              <option value="äganderätt">Äganderätt</option>
+              <option value="bostadsrätt">Bostadsrätt</option>
+              <option value="hyresrätt">Hyresrätt</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="yearBuilt">Byggår:</label>
+            <input type="number" id="yearBuilt" name="yearBuilt">
+          </div>
+
+          <div class="form-group">
+            <label for="energyClass">Energiklass:</label>
+            <select id="energyClass" name="energyClass">
+              <option value="">Välj klass</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="G">G</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="runningCosts">Driftkostnad (kr/år):</label>
+            <input type="number" id="runningCosts" name="runningCosts">
+          </div>
+
+          <div class="form-group">
+            <label for="address">Adress:</label>
+            <input type="text" id="address" name="address" required>
+          </div>
+
+          <div class="form-group">
+            <label for="houseImagesInput">Bilder:</label>
+          
+            <label class="custom-file-upload">
+              <input type="file" id="houseImagesInput" accept="image/*" hidden>
+              Ladda upp bilder
+            </label>
+          
+            <div id="previewContainer" class="preview-container"></div>
+            <input type="file" id="houseImagesHidden" name="houseImages" multiple hidden>
+          </div>
+          
+
+          <button type="submit">Skicka in annons</button>
+        </form>
+      </main>
+
+      <p><a href="/" id="brap">🔙</a></p>
+    </div>
+
+    <script src="/js/houseFormPreview.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+          try {
+            await Clerk.load();
+        
+            const session = await Clerk.session;
+            if (!session) {
+              alert('Din session har gått ut. Logga in igen.');
+              window.location.href = '/users/login';
+              return;
+            }
+        
+            const form = document.querySelector('form');
+            if (!form) return;
+        
+            form.addEventListener('submit', async function (e) {
+              e.preventDefault(); // important
+        
+              const formData = new FormData(form);
+        
+              try {
+                const response = await fetch(form.action, {
+                  method: 'POST',
+                  body: formData
+                });
+        
+                if (response.redirected) {
+                  window.location.href = response.url;
+                } else if (response.ok) {
+                  alert('Annons skapad!');
+                  window.location.href = '/';
+                } else {
+                  const text = await response.text();
+                  console.error('Fel vid skapande av annons:', text);
+                  alert('Fel vid skapande av annons');
+                }
+              } catch (err) {
+                console.error('Nätverksfel:', err);
+                alert('Nätverksfel vid skickande av formulär');
+              }
+            });
+        
+          } catch (error) {
+            /*console.error('Fel vid Clerk load:', error);
+            alert('Problem med Clerk. Försök logga in igen.');
+            window.location.href = '/users/login'; */
+          }
+        });
+        </script>
+        
+
+  </body>
+</html>

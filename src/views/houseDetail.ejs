@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= house.title %> – Detaljer</title>
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/houseDetail.css">
+  </head>
+
+  <body>
+    <nav class="detail-nav">
+      <a href="/" class="btn-back">⬅︎ Till startsidan</a>
+    </nav>
+
+    <main class="house-detail">
+      <header class="detail-header">
+        <h1><%= house.title %></h1>
+        <p class="uploader">Uppladdad av: <%= house.userName %></p>
+      </header>
+
+      <section class="detail-body">
+        <div class="left-image">
+          <% if (house.images && house.images.length > 0) { %>
+            <dialog id="image-modal" class="image-modal hidden">
+              <button class="modal-close" aria-label="Stäng">&times;</button>
+              <img id="modal-img" src="" alt="Fullstor bild">
+            </dialog>
+
+            <div class="carousel">
+              <img
+                id="carousel-image"
+                class="detail-image"
+                src="/house/image/<%= house._id %>/0"
+                alt="<%= house.title %>"
+                data-house-id="<%= house._id %>"
+                data-total="<%= house.images.length %>"
+              >
+
+              <% if (house.images.length > 1) { %>
+                <div class="carousel-controls">
+                  <button type="button" class="carousel-btn" onclick="prevImage()">◀</button>
+                  <button type="button" class="carousel-btn" onclick="nextImage()">▶</button>
+                </div>
+
+                <ul class="carousel-thumbnails">
+                  <% house.images.forEach((img, i) => { %>
+                    <li>
+                      <button
+                        type="button"
+                        class="thumbnail"
+                        data-index="<%= i %>"
+                        onclick="openModal(this.dataset.index)"
+                      >
+                        <img src="/house/image/<%= house._id %>/<%= i %>" alt="Miniatyr">
+                      </button>
+                    </li>
+                  <% }) %>
+                </ul>
+              <% } %>
+            </div>
+          <% } else { %>
+            <img class="detail-image" src="/default-house.png" alt="Ingen bild tillgänglig">
+          <% } %>
+        </div>
+
+        <div class="right-info">
+          <ul class="detail-meta">
+            <li><strong>Pris:</strong> <%= house.price %> kr</li>
+            <li><strong>Adress:</strong> <%= house.address %></li>
+          </ul>
+
+          <h3>Bostadsfakta</h3>
+          <ul class="detail-meta">
+            <% if (house.houseType) { %><li><strong>Typ:</strong> <%= house.houseType %></li><% } %>
+            <% if (house.ownership) { %><li><strong>Upplåtelseform:</strong> <%= house.ownership %></li><% } %>
+            <% if (house.rooms) { %><li><strong>Antal rum:</strong> <%= house.rooms %></li><% } %>
+            <% if (house.area) { %><li><strong>Boarea:</strong> <%= house.area %> m²</li><% } %>
+            <% if (house.biarea) { %><li><strong>Biarea:</strong> <%= house.biarea %> m²</li><% } %>
+            <% if (house.lotSize) { %><li><strong>Tomtarea:</strong> <%= house.lotSize %> m²</li><% } %>
+          </ul>
+
+          <h3>Byggnad</h3>
+          <ul class="detail-meta">
+            <% if (house.yearBuilt) { %><li><strong>Byggår:</strong> <%= house.yearBuilt %></li><% } %>
+          </ul>
+
+          <h3>Energideklaration</h3>
+          <ul class="detail-meta">
+            <% if (house.energyClass) { %><li><strong>Energiklass:</strong> <%= house.energyClass %></li><% } %>
+            <% if (house.runningCosts) { %><li><strong>Driftkostnad:</strong> <%= house.runningCosts %> kr/år</li><% } %>
+          </ul>
+
+          <% if (currentUserId === house.userId || isAdmin) { %>
+            <form action="/house/<%= house._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Är du säker på att du vill radera denna fastighet?');">
+              <button type="submit" class="btn" style="background:#e63946; margin-top:1rem;">
+                Ta bort denna annons
+              </button>
+            </form>
+          <% } %>
+
+          <p class="detail-description"><%= house.description %></p>
+
+          <div class="contact-box">
+            <h2>Kontakta säljaren</h2>
+            <form action="/contact" method="POST">
+              <input type="hidden" name="listingId" value="<%= house._id %>">
+              <input type="text" name="name" placeholder="Ditt namn" required>
+              <input type="email" name="email" placeholder="Din e-post" required>
+              <input type="tel" name="phone" placeholder="Telefonnummer">
+              <textarea name="message" placeholder="Meddelande eller tid för visning" rows="4"></textarea>
+              <button type="submit">Skicka meddelande</button>
+            </form>
+          </div>
+
+          <% if (currentUserId && currentUserId !== house.userId) { %>
+            <div class="chat-box">
+                <form action="/messages/chat/start" method="POST">
+                    <input type="hidden" name="to" value="<%= house.userId %>">
+                    <input type="hidden" name="listingId" value="<%= house._id %>">
+                    <button type="submit" class="btn">Starta chatt</button>
+                  </form>                                 
+            </div>
+          <% } %>
+
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/houseDetail.js"></script>
+  </body>
+</html>

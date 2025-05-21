@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hem</title>
+    <link rel="stylesheet" href="/css/theme.css">
+    <link rel="stylesheet" href="/css/layout.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-left">
+        <svg width="100px" height="50px" viewBox="0 0 4997 3310" version="1.1"
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             xml:space="preserve" xmlns:serif="http://www.serif.com/"
+             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+          <g transform="matrix(1,0,0,1,-10441,-265.025)">
+            <g id="Artboard2" transform="matrix(3.26422,0,0,2.16174,-13349.6,265.025)">
+              <rect x="7288.3" y="0" width="1530.73" height="1530.73" style="fill:none;"/>
+              <g transform="matrix(0.560551,0,0,0.846432,6801.41,-495.431)">
+                <g transform="matrix(1.11022e-16,0.688719,-0.688719,1.11022e-16,2412.13,484.013)">
+                  <path d="M768.009,1698.3L557.68,1698.3L557.68,908.463L1347.52,908.463L1347.52,1118.79L768.009,1118.79L768.009,1698.3Z"
+                        style="fill:rgb(89,155,229);" />
+                </g>
+                <g transform="matrix(0.486998,0.486998,-0.486998,0.486998,1686.46,42.5915)">
+                  <rect x="837.904" y="1159.82" width="224.614" height="292.292"
+                        style="fill:rgb(89,155,229);" />
+                </g>
+              </g>
+              <g transform="matrix(0.306351,0,0,0.462591,4535.71,100.619)">
+                <text x="10797.4px" y="1295.26px"
+                      style="font-family:'Arial-BoldMT','Arial',sans-serif;
+                             font-weight:700;font-size:1199.22px;
+                             fill:rgb(89,155,229);">
+                  irekt
+                </text>
+              </g>
+              <g transform="matrix(0.306351,0,0,0.462591,4533.74,554.331)">
+                <text x="10797.4px" y="1295.26px"
+                      style="font-family:'Arial-BoldMT','Arial',sans-serif;
+                             font-weight:700;font-size:1199.22px;
+                             fill:rgb(89,155,229);">
+                  Hem
+                </text>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div class="topbar-right">
+        <button id="theme-toggle" aria-label="Växla tema">🌓</button>
+        <span class="hamburger" id="hamburger">&#9776;</span>
+        <% if (user) { %>
+          <span class="user-name"><%= user.id %></span>
+          <a href="<%= process.env.CLERK_MANAGE_ACCOUNT_URL || '#' %>"
+             class="profile-link">
+            <img src="<%= user.profileImageUrl || '/default-profile.png' %>"
+                 alt="Profil" class="profile-pic">
+          </a>
+        <% } else { %>
+            <a href="<%= process.env.CLERK_SIGN_IN_URL || '#' %>" class="login-link">Logga in</a>
+        <% } %>
+      </div>
+    </header>
+
+    <nav class="nav-menu" id="nav-menu">
+      <ul>
+        <li><a href="/">Hem</a></li>
+        <li><a href="/house/lista">Mina fastigheter</a></li>
+        <li><a href="/house/ny">Skapa</a></li>
+        <% if (user) { %>
+          <li><a href="/messages/inbox/view">Inkorg</a></li>
+          <li><a href="/users/account">Hantera konto</a></li>
+          <li><a href="/howyousell">Hur man gör</a></li>
+          <form action="/users/logout" method="POST">
+            <li><button type="submit">Logga ut</button></li>
+          </form>
+        <% } else { %>
+          <li><a href="/users/login">Logga in</a></li>
+          <li><a href="/users/register">Registrera dig</a></li>
+        <% } %>
+      </ul>
+    </nav>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <form class="search-sort-form" method="GET" action="/">
+        <input type="text" name="q" placeholder="Sök adress, ort eller nyckelord" aria-label="Sökfält">
+        <select name="sortOrder">
+          <option value="asc"  <%= query.sortOrder==='asc' ? 'selected' : '' %>>Billigast först</option>
+          <option value="desc" <%= query.sortOrder==='desc'? 'selected' : '' %>>Dyrast först</option>
+        </select>
+        <select name="houseType">
+          <option value="">Alla typer</option>
+          <option value="villa">Villa</option>
+          <option value="lägenhet">Lägenhet</option>
+          <option value="radhus">Radhus</option>
+          <option value="övrigt">Övrigt</option>
+        </select>
+        <input type="number" name="minPrice" placeholder="Min pris" aria-label="Lägsta pris">
+        <input type="number" name="maxPrice" placeholder="Max pris" aria-label="Högsta pris">
+        <button type="submit">Sök</button>
+      </form>
+    </div>
+
+    <main class="content">
+      <% if (houses.length === 0) { %>
+        <p>Inga fastigheter att visa.</p>
+      <% } else { %>
+        <div class="image-grid">
+          <% houses.forEach(house => { %>
+            <a class="image-card" href="/house/<%= house._id %>">
+              <div class="heart-icon" aria-label="Spara favorit">❤️</div>
+              <div class="card-content">
+
+                <% if (house.images?.length) { %>
+                  <img src="/house/image/<%= house._id %>/0" alt="Förhandsvisning">
+                <% } else { %>
+                  <img src="/default-house.png" alt="Ingen bild">
+                <% } %>
+
+                <div class="card-text">
+                  <h2 class="listing-title"><%= house.title %></h2>
+
+                  <ul class="listing-details">
+                    <li><strong>Pris:</strong> <%= house.price.toLocaleString('sv-SE') %> kr</li>
+                    <li><strong>Boarea:</strong> <%= house.area %> m²</li>
+                    <% if (house.biarea)    { %><li><strong>Biarea:</strong> <%= house.biarea %> m²</li><% } %>
+                    <% if (house.rooms)     { %><li><strong>Rum:</strong> <%= house.rooms %></li><% } %>
+                    <% if (house.lotSize)   { %><li><strong>Tomt:</strong> <%= house.lotSize %> m²</li><% } %>
+                    <% if (house.yearBuilt) { %><li><strong>Byggår:</strong> <%= house.yearBuilt %></li><% } %>
+                    <% if (house.houseType) { %><li><strong>Typ:</strong> <%= house.houseType %></li><% } %>
+                    <% if (house.ownership) { %><li><strong>Upplåtelse:</strong> <%= house.ownership %></li><% } %>
+                    <% if (house.energyClass){%><li><strong>E-klass:</strong> <%= house.energyClass %></li><% } %>
+                    <% if (house.runningCosts){%><li><strong>Drift:</strong> <%= house.runningCosts.toLocaleString('sv-SE') %> kr/år</li><% } %>
+                  </ul>
+
+                  <p class="listing-desc"><%= house.description %></p>
+                  <p class="uploader">Uppladdad av <%= house.userName %></p>
+                  
+                </div>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+      <% } %>
+    </main>
+
+    <script src="/js/menu.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/themeMode.js"></script>
+  </body>
+</html>
