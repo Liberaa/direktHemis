@@ -1,26 +1,24 @@
-// imageController.js - Hantering av bilddata
-import { getAuth } from '@clerk/express'
+// src/controllers/imageController.js
 import { ImageModel } from '../models/ImageModel.js'
 
-// Ladda upp bild
 export async function uploadImage(req, res) {
-  const { userId } = getAuth(req)
+  const user = req.session.user
+  if (!user) return res.status(403).send('Ej inloggad')
   if (!req.file) return res.status(400).send('Ingen bild uppladdad')
-  
+
   console.log('uploadImage: Received file with original name:', req.file.originalname)
   const imageData = req.file.buffer
   const imageContentType = req.file.mimetype
   const price = req.body.price ? Number(req.body.price) : 0
-  const area = req.body.are ? Number(req.body.area) : 0
-
+  const area = req.body.area ? Number(req.body.area) : 0
 
   try {
     const newImage = new ImageModel({
-      userId,
+      userId: user.id,
       originalName: req.file.originalname,
       description: req.body.description || '',
       area,
-      price, 
+      price,
       image: { data: imageData, contentType: imageContentType }
     })
     await newImage.save()
@@ -32,7 +30,6 @@ export async function uploadImage(req, res) {
   }
 }
 
-// Hämtar en bild 
 export async function getImageData(req, res) {
   const { id } = req.params
   try {

@@ -50,16 +50,15 @@
       <div class="topbar-right">
         <button id="theme-toggle" aria-label="Växla tema">🌓</button>
         <span class="hamburger" id="hamburger">&#9776;</span>
-        <% if (user) { %>
-          <span class="user-name"><%= user.id %></span>
-          <a href="<%= process.env.CLERK_MANAGE_ACCOUNT_URL || '#' %>"
-             class="profile-link">
-            <img src="<%= user.profileImageUrl || '/default-profile.png' %>"
-                 alt="Profil" class="profile-pic">
-          </a>
-        <% } else { %>
-            <a href="<%= process.env.CLERK_SIGN_IN_URL || '#' %>" class="login-link">Logga in</a>
-        <% } %>
+      <% if (user) { %>
+  <span class="user-name"><%= user.name || user.email %></span>
+  <a href="/users/account" class="profile-link">
+    <img src="<%= user.profileImageUrl || '/default-profile.png' %>" alt="Profil" class="profile-pic">
+  </a>
+<% } else { %>
+  <a href="/users/login" class="login-link">Logga in</a>
+<% } %>
+
       </div>
     </header>
 

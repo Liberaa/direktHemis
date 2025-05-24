@@ -206,3 +206,28 @@
     color: var(--head-text);
   }
   
+  .user-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-auth .profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logout-button {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.3rem 0.5rem;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
