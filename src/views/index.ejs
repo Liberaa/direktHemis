@@ -52,9 +52,7 @@
         <span class="hamburger" id="hamburger">&#9776;</span>
       <% if (user) { %>
   <span class="user-name"><%= user.name || user.email %></span>
-  <a href="/users/account" class="profile-link">
-    <img src="<%= user.profileImageUrl || '/default-profile.png' %>" alt="Profil" class="profile-pic">
-  </a>
+
 <% } else { %>
   <a href="/users/login" class="login-link">Logga in</a>
 <% } %>

@@ -3,51 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>Ditt konto</title>
-  <link rel="stylesheet" href="/css/theme.css">
-  <link rel="stylesheet" href="/css/layout.css">
-  <style>
-    .account-container {
-      max-width: 500px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      text-align: center;
-    }
-
-    .account-container img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 1rem;
-    }
-
-    .account-container h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .account-container p {
-      font-size: 1rem;
-      color: #666;
-    }
-
-    .account-container .back-link {
-      margin-top: 2rem;
-      display: inline-block;
-      color: var(--primary-color);
-    }
-  </style>
+  <link rel="stylesheet" href="/css/account.css">
 </head>
 <body>
-  <div class="account-container">
-    <img src="<%= user.profileImageUrl || '/default-profile.png' %>" alt="Profilbild">
-    <h2><%= user.name || 'Namnlös användare' %></h2>
-    <p><%= user.email %></p>
 
-    <a href="/" class="back-link">← Tillbaka till startsidan</a>
+  <!-- Animated Bubbles -->
+  <div class="animated-bg" id="bubble-container"></div>
+
+  <!-- Shark swims through -->
+  <div class="shark" id="shark">
+    <img src="/img/shark.png" alt="Shark">
   </div>
+
+  <!-- Account Info Form -->
+  <div class="form-container">
+    <h1>Ditt konto</h1>
+
+    <% const profileImage = user.profileImageUrl || '/default-profile.png' %>
+    <img src="<%= profileImage %>" alt="Profilbild" class="profile-pic">
+
+    <form action="/users/account/update" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Namn:</label>
+        <input type="text" name="name" id="name" value="<%= user.name %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="profileImage">Profilbild:</label>
+        <div class="custom-file-upload">
+          <label for="profileImage">Välj bild</label>
+          <input type="file" name="profileImage" id="profileImage" accept="image/*">
+          <span id="file-chosen">Ingen fil har valts</span>
+        </div>
+      </div>
+
+      <button type="submit">Spara ändringar</button>
+    </form>
+
+    <form action="/users/delete" method="POST" onsubmit="return confirm('Är du säker på att du vill ta bort ditt konto?');">
+      <button type="submit" class="danger">Ta bort konto</button>
+    </form>
+  </div>
+  
+<div class="shark-score" id="sharkScore">🦈 Bubbles eaten: 0</div>
+
+  <!-- Bubble shark animation logic -->
+  <script src="/js/sharkBubbles.js"></script>
 </body>
 </html>

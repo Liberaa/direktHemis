@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Mina favoriter</title>
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Sparade bostäder</h1>
+    <% if (favorites.length === 0) { %>
+      <p>Inga sparade bostäder än.</p>
+    <% } else { %>
+      <ul>
+        <% favorites.forEach(house => { %>
+          <li>
+            <a href="/house/<%= house._id %>">
+              <%= house.title %> – <%= house.price.toLocaleString('sv-SE') %> kr
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+    <a href="/">← Tillbaka</a>
+  </div>
+</body>
+</html>

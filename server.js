@@ -47,6 +47,16 @@ app.use('/users', userRoutes)
 app.use('/house', houseRoutes)
 app.use('/images', imageRoutes)
 
+// Static content pages
+app.get('/howyousell', (req, res) => {
+  res.render('howYouSell')
+})
+
+app.get('/detaljer', (req, res) => {
+  res.render('detaljer')
+})
+
+
 // Start server
 async function startServer () {
   try {
