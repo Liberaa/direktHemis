@@ -188,6 +188,10 @@ button.danger:hover {
   width: 100%;
 }
 
+#master {
+    color: #1f2937;
+}
+
 .shark-score {
   position: fixed;
   top: 1rem;

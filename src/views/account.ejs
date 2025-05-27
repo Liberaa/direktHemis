@@ -24,6 +24,7 @@
 
     <form action="/users/account/update" method="POST" enctype="multipart/form-data">
       <div class="form-group">
+         <p><a href="/" id="master">Tillbaka</a></p>
         <label for="name">Namn:</label>
         <input type="text" name="name" id="name" value="<%= user.name %>" required>
       </div>
@@ -36,7 +37,6 @@
           <span id="file-chosen">Ingen fil har valts</span>
         </div>
       </div>
-
       <button type="submit">Spara ändringar</button>
     </form>
 
@@ -45,7 +45,7 @@
     </form>
   </div>
   
-<div class="shark-score" id="sharkScore">🦈 Bubbles eaten: 0</div>
+<div class="shark-score" id="sharkScore"> Bubbles Slaktade: 0</div>
 
   <!-- Bubble shark animation logic -->
   <script src="/js/sharkBubbles.js"></script>

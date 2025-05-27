@@ -43,7 +43,7 @@ function checkCollisions() {
       bubble.remove()
       score++
       scoreDisplay.textContent = `🦈 Bubbles eaten: ${score}`
-    }
+    } 
   })
 }
 
